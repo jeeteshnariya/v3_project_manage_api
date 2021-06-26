@@ -12,7 +12,7 @@ class Profile extends Model
     protected $fillable = ['name', 'birthdate', 'address',
         'city', 'state', 'country',
         'phone', 'semester',
-        'college_name', 'course', 'role_id',
+        'college_name', 'course', 'role_id', 'user_id', 'technology', 'status',
         'p_id', 'cover', 'avtar', 'email'];
 
     protected $hidden = ['created_at', 'updated_at', 'user_id', 'address', 'city', 'state', 'country'];

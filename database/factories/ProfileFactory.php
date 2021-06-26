@@ -40,8 +40,6 @@ class ProfileFactory extends Factory
             'avtar' => 'https://picsum.photos/100/100',
             'status' => $this->faker->randomElement(['Active', 'Archive', 'Locked']),
             'user_id' => $this->faker->numberBetween($min = 1, $max = 50),
-            'role_id' => $this->faker->randomElement([1, 2, 3]),
-
         ];
     }
 }

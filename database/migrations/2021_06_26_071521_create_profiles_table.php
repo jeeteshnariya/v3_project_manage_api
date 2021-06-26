@@ -33,7 +33,6 @@ class CreateProfilesTable extends Migration
             $table->string('avtar')->nullable();
             $table->string('status')->nullable();
             $table->integer('user_id');
-            $table->integer('role_id');
             $table->timestamps();
         });
     }

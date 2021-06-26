@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Profile;
-use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,6 +15,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'p_id',
+        'role_id',
     ];
 
     protected $hidden = [
