@@ -17,11 +17,11 @@ class Profile extends Model
 
     protected $hidden = ['created_at', 'updated_at', 'user_id', 'address', 'city', 'state', 'country'];
 
-    protected $appends = ['full_address'];
+    // protected $appends = ['full_address'];
 
-    public function getFullAddressAttribute()
-    {
+    // public function getFullAddressAttribute()
+    // {
 
-        return $this->attributes['address'] . "," . $this->attributes['city'] . "," . $this->attributes['state'] . "(" . $this->attributes['country'] . ")";
-    }
+    //     return $this->attributes['address'] . "," . $this->attributes['city'] . "," . $this->attributes['state'] . "(" . $this->attributes['country'] . ")";
+    // }
 }

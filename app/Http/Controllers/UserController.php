@@ -10,8 +10,12 @@ class UserController extends Controller
     {
         if ($id && is_numeric($id)) {
 
-            return User::findOrFail($id);
+            $User = User::with(['profiles', 'roles'])->findOrFail($id);
+            return response(['User' => $User, 'message' => 'data retrive successfully'], 200);
+
         }
-        return User::all();
+
+        $User = User::with(['profiles', 'roles'])->get();
+        return response(['User' => $User, 'message' => 'data retrive successfully'], 200);
     }
 }
