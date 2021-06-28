@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -26,11 +25,12 @@ class AuthController extends Controller
             'password' => bcrypt($fields['password']),
         ]);
 
-        $token = $user->createToken(Str::random(32))->plainTextToken;
+        $token = $user->createToken('register')->plainTextToken;
 
         $data = [
             'user' => $user,
             'token' => $token,
+            'message' => 'data retrive successfully',
         ];
 
         return response()->json($data, 201);
@@ -42,6 +42,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+            'device_name' => 'required',
         ]);
 
         $user = User::where('email', $request->email)->first();
@@ -52,7 +53,13 @@ class AuthController extends Controller
             ]);
         }
 
-        return $user->createToken($request->device_name)->plainTextToken;
+        $data = [
+            'user' => $user,
+            'token' => $user->createToken($request->device_name)->plainTextToken,
+            'message' => 'data retrive successfully',
+        ];
+
+        return response()->json($data, 201);
     }
 
     public function logout(Request $request)
