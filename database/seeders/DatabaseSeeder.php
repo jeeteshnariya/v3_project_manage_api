@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Profile;
 use App\Models\Project;
 use App\Models\Role;
 use App\Models\Task;
@@ -18,7 +17,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(15)->create();
-        Profile::factory(15)->create();
+        // Profile::factory(15)->create();
         Project::factory(15)->create();
         Task::factory(20)->create();
         Role::create([

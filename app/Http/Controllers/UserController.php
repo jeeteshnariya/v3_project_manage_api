@@ -40,7 +40,6 @@ class UserController extends Controller
         if ($user) {
             $data = $request->profiles;
             $data['user_id'] = $user->id;
-            $data['email'] = $user->email;
             $profile = Profile::create($data);
             return response(['profile' => $profile, 'message' => 'data save successfully'], 201);
         }

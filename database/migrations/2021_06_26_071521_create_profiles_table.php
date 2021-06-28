@@ -18,7 +18,7 @@ class CreateProfilesTable extends Migration
             $table->string('name');
             $table->string('address')->nullable();
             $table->string('gender')->nullable();
-            $table->string('email')->unique();
+            //$table->string('email')->unique();
             $table->biginteger('phone')->nullable();
             // $table->date('birthdate');
             // $table->string('city');

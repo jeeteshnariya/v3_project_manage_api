@@ -25,7 +25,7 @@ class ProfileFactory extends Factory
             'name' => $this->faker->name(),
             'address' => $this->faker->address,
             'gender' => $this->faker->randomElement(['male', 'female']),
-            'email' => $this->faker->safeEmail(),
+            //'email' => $this->faker->safeEmail(),
             'phone' => $this->faker->numberBetween($min = 7777777777, $max = 9999999999),
             // 'birthdate' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
             // 'city' => $this->faker->city,
