@@ -28,6 +28,7 @@ class ProjectFactory extends Factory
             'due_date' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
             'status' => $this->faker->randomElement(['Active', 'Archive', 'Pending', 'Completed']),
             'description' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
+            'user_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8]),
         ];
     }
 }

@@ -25,6 +25,7 @@ class TaskFactory extends Factory
             'title' => $this->faker->name(),
             'priority' => $this->faker->randomElement(['High', 'Low', 'Medium']),
             'status' => $this->faker->randomElement(['Active', 'Archive', 'Pending', 'Completed']),
+            'project_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8]),
         ];
     }
 }
