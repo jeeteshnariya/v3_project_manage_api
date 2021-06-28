@@ -18,6 +18,7 @@ class CreateTasksTable extends Migration
             $table->string('title');
             $table->string('priority');
             $table->string('status');
+            $table->integer('project_id');
             $table->timestamps();
         });
     }
