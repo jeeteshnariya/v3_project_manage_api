@@ -8,17 +8,22 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index($id = null)
+    public function index(Request $request, $id = null)
     {
-        if ($id && is_numeric($id)) {
 
-            $User = User::with(['profiles', 'roles'])->findOrFail($id);
-            return response(['User' => $User, 'message' => 'data retrive successfully'], 200);
+        $query = User::where('p_id', $request->user()->id)->with(['profiles', 'roles']);
 
-        }
+        $query = ($id && is_numeric($id)) ? $query->where('id', $id) : $query;
 
-        $User = User::with(['profiles', 'roles'])->get();
-        return response(['User' => $User, 'message' => 'data retrive successfully'], 200);
+        $query = $query->get();
+
+        $data = [
+            'users' => $query,
+            'message' => 'Data retrive successfully',
+        ];
+
+        return response()->json($data, 200);
+
     }
 
     public function store(Request $request)

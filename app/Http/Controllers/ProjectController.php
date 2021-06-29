@@ -12,18 +12,21 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id = null)
+    public function index(Request $request, $id = null)
     {
-        $query = Project::query();
 
-        if ($id && is_numeric($id)) {
+        $query = Project::where('user_id', $request->user()->id);
 
-            $Project = $query->findOrFail($id);
-            return response(['project' => $Project, 'message' => 'data retrive successfully'], 200);
-        }
+        $query = ($id && is_numeric($id)) ? $query->where('id', $id) : $query;
 
-        $Project = $query->get();
-        return response(['project' => $Project, 'message' => 'data retrive successfully'], 200);
+        $query = $query->get();
+
+        $data = [
+            'projects' => $query,
+            'message' => 'Data retrive successfully',
+        ];
+
+        return response()->json($data, 200);
 
     }
 
@@ -32,7 +35,7 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
     }
@@ -45,7 +48,27 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        //return $request->all();
+        $fields = $request->validate([
+            'name' => 'required|string',
+            'technology' => 'required|string',
+            'description' => 'required|string',
+            'due_date' => 'required|string',
+            'status' => 'required|string',
+            'start_date' => 'required|string',
+        ]);
+
+        $fields['user_id'] = $request->user()->id;
+        // dd($fields);
+        $query = Project::create($fields);
+
+        $data = [
+            'projects' => $query,
+            'message' => 'Data save successfully',
+        ];
+
+        return response()->json($data, 201);
     }
 
     /**
@@ -77,9 +100,20 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, Project $project, $id = null)
     {
-        //
+        $query = $project->where('user_id', $request->user()->id)->find($id);
+        $data = [
+            'projects' => $query,
+            'message' => 'Record Successfully Updated!',
+        ];
+        if ($query) {
+            $query = $query->update($request->all());
+        } else {
+            $data['message'] = "Record id not found for update!";
+        }
+
+        return response()->json($data, 201);
     }
 
     /**
@@ -88,8 +122,22 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy(Request $request, Project $project, $id = null)
     {
-        //
+
+        $query = $project->where('user_id', $request->user()->id)->find($id);
+
+        $data = [
+            'projects' => $query,
+            'message' => 'Record deleted successfully!',
+        ];
+        if ($query) {
+            $query = $query->delete();
+        } else {
+            $data['message'] = "Record id not found for update!";
+        }
+
+        return response()->json($data, 401);
+
     }
 }
