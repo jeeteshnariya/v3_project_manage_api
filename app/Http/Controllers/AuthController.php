@@ -11,7 +11,11 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-
+        // Database if empty than we register first user by register function
+        $admin = User::where('role_id', 1)->first();
+        if ($admin) {
+            return response()->json(['message' => 'Admin Already Added'], 202);
+        }
         //return $request->all();
         $fields = $request->validate([
             'name' => 'required|string',
@@ -45,7 +49,7 @@ class AuthController extends Controller
             'device_name' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::with('roles')->where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([

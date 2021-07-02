@@ -15,7 +15,7 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            // $table->string('name');
             $table->string('address')->nullable();
             $table->string('gender')->nullable();
             //$table->string('email')->unique();
@@ -25,9 +25,9 @@ class CreateProfilesTable extends Migration
             // $table->string('state');
             // $table->string('country');
             $table->integer('semester')->nullable();
-            $table->string('course')->nullable();
+            //$table->string('course')->nullable();
             $table->string('college_name')->nullable();
-            $table->string('technology')->nullable();
+            // $table->string('technology')->nullable();
             $table->string('qualification')->nullable();
             $table->string('cover')->nullable();
             $table->string('avtar')->nullable();

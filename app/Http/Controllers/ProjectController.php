@@ -15,9 +15,12 @@ class ProjectController extends Controller
     public function index(Request $request, $id = null)
     {
 
-        $query = Project::where('user_id', $request->user()->id);
+        $query = Project::query()->with('users:id,name,email');
+
+        $query = ($request->user()->role_id == 1) ? $query : $query->where('user_id', $request->user()->id);
 
         $query = ($id && is_numeric($id)) ? $query->where('id', $id) : $query;
+        $query = ($request->has('name')) ? $query->where('name', 'like', '%' . $request->name) : $query;
 
         $query = $query->get();
 
@@ -100,9 +103,10 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project, $id = null)
+    public function update(Request $request, Project $query, $id = null)
     {
-        $query = $project->where('user_id', $request->user()->id)->find($id);
+        $query = ($request->user()->role_id == 1) ? $query : $query->where('user_id', $request->user()->id);
+        $query = $query->find($id);
         $data = [
             'projects' => $query,
             'message' => 'Record Successfully Updated!',
@@ -122,10 +126,11 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Project $project, $id = null)
+    public function destroy(Request $request, Project $query, $id = null)
     {
 
-        $query = $project->where('user_id', $request->user()->id)->find($id);
+        $query = ($request->user()->role_id == 1) ? $query : $query->where('user_id', $request->user()->id);
+        $query = $query->find($id);
 
         $data = [
             'projects' => $query,
@@ -137,7 +142,7 @@ class ProjectController extends Controller
             $data['message'] = "Record id not found for update!";
         }
 
-        return response()->json($data, 401);
+        return response()->json($data, 202);
 
     }
 }

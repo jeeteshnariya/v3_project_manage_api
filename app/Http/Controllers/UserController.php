@@ -63,6 +63,6 @@ class UserController extends Controller
     {
         $User = User::destroy($id);
         $Profile = Profile::where('user_id', $id)->delete();
-        return response(['data' => [$User, $Profile], 'message' => 'Record deleted successfully'], 401);
+        return response(['data' => [$User, $Profile], 'message' => 'Record deleted successfully'], 202);
     }
 }

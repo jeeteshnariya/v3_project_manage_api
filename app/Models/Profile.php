@@ -9,19 +9,13 @@ class Profile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'birthdate', 'address',
-        'city', 'state', 'country',
+    protected $fillable = ['address',
         'phone', 'semester',
-        'college_name', 'course', 'role_id', 'user_id', 'technology', 'status',
+        'college_name', 'qualification', 'role_id', 'user_id',
+        'status',
+        'gender',
         'p_id', 'cover', 'avtar', 'email'];
 
-    protected $hidden = ['created_at', 'updated_at', 'user_id', 'address', 'city', 'state', 'country'];
+    protected $hidden = ['created_at', 'updated_at', 'user_id'];
 
-    // protected $appends = ['full_address'];
-
-    // public function getFullAddressAttribute()
-    // {
-
-    //     return $this->attributes['address'] . "," . $this->attributes['city'] . "," . $this->attributes['state'] . "(" . $this->attributes['country'] . ")";
-    // }
 }

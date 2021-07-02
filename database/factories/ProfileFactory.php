@@ -22,7 +22,7 @@ class ProfileFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
+            // 'name' => $this->faker->name(),
             'address' => $this->faker->address,
             'gender' => $this->faker->randomElement(['male', 'female']),
             //'email' => $this->faker->safeEmail(),
@@ -32,9 +32,9 @@ class ProfileFactory extends Factory
             // 'state' => $this->faker->state,
             // 'country' => $this->faker->country,
             'semester' => $this->faker->numberBetween($min = 1, $max = 6),
-            'course' => $this->faker->randomElement(['MCA', 'BCA', 'CS']),
+            // 'course' => $this->faker->randomElement(['MCA', 'BCA', 'CS']),
             'college_name' => $this->faker->company,
-            'technology' => $this->faker->randomElement(['php', 'nodje', 'laravel', 'java', 'pyhton']),
+            //'technology' => $this->faker->randomElement(['php', 'nodje', 'laravel', 'java', 'pyhton']),
             'qualification' => $this->faker->randomElement(['MCA', 'BCA', 'CS']),
             'cover' => 'https://picsum.photos/600/150',
             'avtar' => 'https://picsum.photos/100/100',
