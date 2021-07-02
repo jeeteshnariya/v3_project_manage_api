@@ -12,9 +12,19 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, Task $task, $id = null)
     {
-        //
+        $query = $task::query();
+
+        $query = ($id && is_numeric($id)) ? $query->where('project_id', $id) : $query;
+        $query = $query->get();
+
+        $data = [
+            'tasks' => $query,
+            'message' => 'Data retrive successfully',
+        ];
+
+        return response()->json($data, 200);
     }
 
     /**
@@ -33,9 +43,26 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Task $task)
     {
-        //
+
+        //return $request->all();
+        $fields = $request->validate([
+            'title' => 'required|string',
+            'priority' => 'required|string',
+            'project_id' => 'required|numeric',
+            'status' => 'required|string',
+        ]);
+
+        // dd($fields);
+        $query = $task->create($fields);
+
+        $data = [
+            'projects' => $query,
+            'message' => 'Task save successfully',
+        ];
+
+        return response()->json($data, 201);
     }
 
     /**
@@ -67,9 +94,27 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request, Task $task, $id = 0)
     {
-        //
+
+        $fields = $request->validate([
+            'project_id' => 'required|numeric',
+        ]);
+
+        $query = $task;
+        $query = ($request->project_id) ? $query->where('project_id', $request->project_id) : $query;
+        $query = $query->find($id);
+        $data = [
+            'projects' => $query,
+            'message' => 'Record Successfully Updated!',
+        ];
+        if ($query) {
+            $query = $query->update($request->all());
+        } else {
+            $data['message'] = "Record id not found for update!";
+        }
+
+        return response()->json($data, 201);
     }
 
     /**
@@ -78,8 +123,21 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy(Task $task, $id = 0)
     {
-        //
+
+        $query = $task->find($id);
+
+        $data = [
+            'projects' => $query,
+            'message' => 'Record deleted successfully!',
+        ];
+        if ($query) {
+            $query = $query->delete();
+        } else {
+            $data['message'] = "Record id not found for update!";
+        }
+
+        return response()->json($data, 202);
     }
 }

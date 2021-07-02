@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +26,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('projects', [ProjectController::class, 'store']);
     Route::put('projects/{id}', [ProjectController::class, 'update']);
     Route::delete('projects/{id}', [ProjectController::class, 'destroy']);
+
+    Route::get('tasks/{id?}', [TaskController::class, 'index']);
+    Route::post('tasks', [TaskController::class, 'store']);
+    Route::put('tasks/{id}', [TaskController::class, 'update']);
+    Route::delete('tasks/{id}', [TaskController::class, 'destroy']);
+
+    Route::post('uploads', [FileController::class, 'update']);
 
     Route::post('logout', [AuthController::class, 'logout']);
 
