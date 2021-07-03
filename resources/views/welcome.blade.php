@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,13 +6,13 @@
     <link
       rel="apple-touch-icon"
       sizes="76x76"
-      href="{{ URL::asset('dist/assets/img/apple-icon.png') }}"
+      href="./assets/img/apple-icon.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="96x96"
-      href="{{ URL::asset('dist/assets/img/apple-icon.png') }}./assets/img/favicon.png"
+      href="./assets/img/favicon.png"
     />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta
@@ -27,8 +26,8 @@
     <base href="/" />
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="{{ URL::asset('dist/assets/css/demo.css') }}" rel="stylesheet" />
 
+    <link href="{{ URL::asset('dist/assets/css/demo.css') }}" rel="stylesheet" />
     <!--     Fonts and icons     -->
     <link
       href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200"
@@ -38,6 +37,8 @@
       href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
       rel="stylesheet"
     />
+
+    <link href="{{ URL::asset('dist/styles.cbbc3d01fbabecc52ce4.css') }}" rel="stylesheet" />
   </head>
   <body>
     <app-root>
@@ -45,10 +46,16 @@
         <div class="loader"></div>
       </div>
     </app-root>
-  <script src="{{ URL::asset('dist/assets/runtime-es2015.js') }}" type="module"></script>
-  <script src="{{ URL::asset('dist/assets/runtime-es5.js') }}" nomodule defer></script><script src="polyfills-es5.js" nomodule defer></script>
-  <script src="{{ URL::asset('dist/assets/polyfills-es2015.js') }}" type="module"></script><script src="styles-es2015.js" type="module"></script>
-      <script src="{{ URL::asset('dist/assets/styles-es5.js') }}" nomodule defer></script><script src="vendor-es2015.js" type="module"></script>
-      <script src="{{ URL::asset('dist/assets/vendor-es5.js') }}" nomodule defer></script><script src="main-es2015.js" type="module"></script>
-      <script src="{{ URL::asset('dist/assets/main-es5.js') }}" nomodule defer></script></body>
+
+
+    <script
+      src="{{ URL::asset('dist/main-es2015.39e5b1af2d84ff7adadd.js')}}"
+      type="module"
+    ></script>
+    <script
+      src="{{ URL::asset('dist/main-es5.39e5b1af2d84ff7adadd.js')}}"
+      nomodule
+      defer
+    ></script>
+  </body>
 </html>
