@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -15,9 +16,12 @@ class ProjectController extends Controller
     public function index(Request $request, $id = null)
     {
 
-        $query = Project::query()->with('users:id,name,email');
+        $child_ids = User::where('p_id', $request->user()->id)->get('id')->toArray('id');
+        $ids = collect($child_ids)->flatten()->unique()->sort()->values()->all();
+        // dd($ids);
+        $query = Project::query()->with('users:id,name,email')->whereIn('user_id', $ids);
 
-        $query = ($request->user()->role_id == 1) ? $query : $query->where('user_id', $request->user()->id);
+        // $query = ($request->user()->role_id == 1) ? $query : $query->where('user_id', $request->user()->id);
 
         $query = ($id && is_numeric($id)) ? $query->where('id', $id) : $query;
         $query = ($request->has('name')) ? $query->where('name', 'like', '%' . $request->name) : $query;
@@ -144,5 +148,10 @@ class ProjectController extends Controller
 
         return response()->json($data, 202);
 
+    }
+
+    private function _ids_($child_ids)
+    {
+        return collect($child_ids)->flatten()->unique()->sort()->values()->all();
     }
 }
