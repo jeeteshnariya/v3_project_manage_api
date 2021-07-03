@@ -36,18 +36,6 @@ class FileController extends Controller
     public function store(Request $request)
     {
 
-        $files = $request->file('file');
-        // dd($files);
-        $data = [];
-        if ($request->hasfile('file')) {
-            foreach ($files as $file) {
-                $name = $file->getClientOriginalName();
-                $file->move(public_path() . '/uploaded/', $name);
-                $data[] = $name;
-            }
-
-        }
-        return response()->json($data, 201);
     }
 
     /**
@@ -81,24 +69,28 @@ class FileController extends Controller
      */
     public function update(Request $request, File $file)
     {
-        $request->validate([
-            'upload.*' => 'required',
-        ]);
-        if ($request->hasFile('upload')) {
-            $imageNameArr = [];
-            foreach ($request->upload as $file) {
-                // you can also use the original name
-                $imageName = time() . '-' . $file->getClientOriginalName();
-                $imageNameArr[][] = [
-                    'name' => $imageName,
-                    'path' => public_path('uploaded'),
-                    'type' => $file->extension(),
-                    'filepath' => $file,
-                ];
-                // Upload file to public path in images directory
-                $file->move(public_path('uploaded'), $imageName);
-                // Database operation
-            }
+        // $request->validate([
+        //     'upload.*' => 'required',
+        // ]);
+
+        $imageNameArr = [];
+        if ($request->has('file')) {
+            // foreach ($request->file('file') as $file) {
+            // you can also use the original name
+            $file = $request->file('file');
+            $imageName = time() . '-' . $file->getClientOriginalName();
+            $imageNameArr = [
+                'name' => $imageName,
+                'path' => env('APP_URL') . '/storage/' . $imageName,
+                'type' => $file->extension(),
+                'size' => $file->getSize(),
+                'project_id' => $request->id,
+            ];
+            // Upload file to public path in images directory
+            $file->move(public_path('storage'), $imageName);
+            File::create($imageNameArr);
+            // Database operation
+            // }
         }
 
         $data = [
