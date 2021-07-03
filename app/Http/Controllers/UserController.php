@@ -29,6 +29,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         // return $request->user();
+        $password = ($request->password) ? $request->password : "1234567";
         $login_user = $request->user();
         // $auth_role = Role::where('id', $login_user->role_id)->first();
         // return $request->all();
@@ -37,7 +38,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => bcrypt($password),
             'p_id' => $p_id,
             'role_id' => $role_id + 1,
         ]);
