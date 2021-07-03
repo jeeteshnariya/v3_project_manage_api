@@ -12,9 +12,19 @@ class FileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, File $files, $id = null)
     {
-        //
+        $query = $files::query();
+
+        $query = ($id && is_numeric($id)) ? $query->where('project_id', $id) : $query;
+        $query = $query->get();
+
+        $data = [
+            'files' => $query,
+            'message' => 'Data retrive successfully',
+        ];
+
+        return response()->json($data, 200);
     }
 
     /**

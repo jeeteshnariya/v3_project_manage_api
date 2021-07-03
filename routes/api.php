@@ -33,6 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('tasks/{id}', [TaskController::class, 'destroy']);
 
     Route::post('uploads', [FileController::class, 'update']);
+    Route::get('files/{id?}', [FileController::class, 'index']);
 
     Route::post('logout', [AuthController::class, 'logout']);
 
