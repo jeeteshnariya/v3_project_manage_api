@@ -31,6 +31,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function childs()
+    {
+        return $this->hasMany(self::class, 'p_id', 'id')->select(['id', 'p_id'])->with('childs');
+    }
+
     public function profiles()
     {
         return $this->hasOne(Profile::class);

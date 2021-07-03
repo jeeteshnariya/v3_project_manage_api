@@ -16,12 +16,12 @@ class ProjectController extends Controller
     public function index(Request $request, $id = null)
     {
 
-        $child_ids = User::where('p_id', $request->user()->id)->get('id')->toArray('id');
+        $child_ids = User::where('p_id', $request->user()->id)->with('childs')->get('id')->toArray('id');
         $ids = collect($child_ids)->flatten()->unique()->sort()->values()->all();
         // dd($ids);
-        $query = Project::query()->with('users:id,name,email')->whereIn('user_id', $ids);
+        $query = Project::query()->with('users:id,name,email');
 
-        // $query = ($request->user()->role_id == 1) ? $query : $query->where('user_id', $request->user()->id);
+        $query = ($request->user()->role_id == 2 || $request->user()->role_id == 1) ? $query->whereIn('user_id', $ids) : $query->where('user_id', $request->user()->id);
 
         $query = ($id && is_numeric($id)) ? $query->where('id', $id) : $query;
         $query = ($request->has('name')) ? $query->where('name', 'like', '%' . $request->name) : $query;
