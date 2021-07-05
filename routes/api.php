@@ -34,6 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('uploads', [FileController::class, 'update']);
     Route::get('files/{id?}', [FileController::class, 'index']);
+    Route::get('dashboard', [AuthController::class, 'dashboard']);
 
     Route::post('logout', [AuthController::class, 'logout']);
 

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
+use App\Models\Profile;
+use App\Models\Project;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -69,5 +73,21 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         return $request->user()->tokens()->delete();
+    }
+
+    public function dashboard(Request $request)
+    {
+        $user = User::where('p_id', $request->user()->id)->sum('id');
+        $task = Task::count('id');
+        $project = Project::count('id');
+        $profile = Profile::count('id');
+        $files = File::count('id');
+
+        $data = [
+            'pie' => [$project, $profile, $task, $files],
+            'message' => 'Data retrive successfully',
+        ];
+
+        return response()->json($data, 201);
     }
 }

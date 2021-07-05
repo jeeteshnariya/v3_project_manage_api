@@ -14,7 +14,9 @@ class UserController extends Controller
         $query = User::where('p_id', $request->user()->id)->with(['profiles', 'roles']);
 
         $query = ($id && is_numeric($id)) ? $query->where('id', $id) : $query;
-
+        $query = ($request->search !== null) ? $query->where('name', 'like', '%' . $request->search . '%')
+            ->orWhere('email', 'like', '%' . $request->search . '%')
+        : $query;
         $query = $query->get();
 
         $data = [
