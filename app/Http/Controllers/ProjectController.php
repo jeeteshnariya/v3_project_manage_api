@@ -22,9 +22,8 @@ class ProjectController extends Controller
         $query = Project::query()->with('users:id,name,email');
 
         $query = ($request->user()->role_id == 2 || $request->user()->role_id == 1) ? $query->whereIn('user_id', $ids) : $query->where('user_id', $request->user()->id);
-
-        $query = ($id && is_numeric($id)) ? $query->where('id', $id) : $query;
-        $query = ($request->has('name')) ? $query->where('name', 'like', '%' . $request->name) : $query;
+        $query = ($request->search) ? $query->where('name', 'like', '%' . $request->search) : $query;
+        $query = ($id && is_numeric($id)) ? $query->where('id', $id) : $query;       
 
         $query = $query->get();
 

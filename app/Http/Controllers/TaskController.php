@@ -45,7 +45,12 @@ class TaskController extends Controller
      */
     public function store(Request $request, Task $task)
     {
-
+        if($request->user()->role_id === 3){
+            $data=[
+                "error" => "student can not fill form",
+            ];
+            return response()->json($data, 402);
+        }
         //return $request->all();
         $fields = $request->validate([
             'title' => 'required|string',
