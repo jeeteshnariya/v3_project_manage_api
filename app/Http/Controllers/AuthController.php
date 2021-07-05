@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
-use App\Models\Profile;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
@@ -77,14 +76,16 @@ class AuthController extends Controller
 
     public function dashboard(Request $request)
     {
-        $user = User::where('p_id', $request->user()->id)->sum('id');
+        $child_ids = User::where('id', $request->user()->id)->with('childs')->get('id')->toArray('id');
+        $ids = collect($child_ids)->flatten()->unique()->sort()->values()->all();
+
         $task = Task::count('id');
-        $project = Project::count('id');
-        $profile = Profile::count('id');
+        $project = Project::whereIn('user_id', $ids)->count('id');
+        $profile = User::whereIn('p_id', $ids)->count('id');
         $files = File::count('id');
 
         $data = [
-            'pie' => [$project, $profile, $task, $files],
+            'data' => [$project, $profile, $task, $files],
             'message' => 'Data retrive successfully',
         ];
 
